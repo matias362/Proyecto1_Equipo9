@@ -1,0 +1,27 @@
+# Dependencias de Node.js (No se deben subir porque son pesadas)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno y secretos (Seguridad crítica)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Claves SSH (MANTENER SECRETAS según manual)
+*.pem
+
+# Archivos temporales de Terraform e infraestructura
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Logs y archivos temporales del sistema
+*.log
+dist/
+build/
+.DS_Store
