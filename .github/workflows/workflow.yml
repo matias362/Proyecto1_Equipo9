@@ -28,7 +28,7 @@ jobs:
       - name: Iniciar nodejs
         run: npm ci
       - name: Tests (Eslint)
-        run: npm run eslint
+        run: npm run lint
   snyk:
     needs: eslint
     runs-on: ubuntu-latest
