@@ -40,6 +40,8 @@ jobs:
       - name: Iniciar nodejs
         run: npm ci
       - name: Tests (Snyk)
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: npm run snyk-test
   dockerbuild:
     needs: snyk
