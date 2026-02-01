@@ -17,6 +17,7 @@ jobs:
         run: npm ci
       - name: Tests (Supertest)
         run: npm run test
+
   eslint:
     needs: supertest
     runs-on: ubuntu-latest
@@ -29,6 +30,7 @@ jobs:
         run: npm ci
       - name: Tests (Eslint)
         run: npm run lint
+
   snyk:
     needs: eslint
     runs-on: ubuntu-latest
@@ -43,7 +45,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: npm run snyk-test
-  dockerbuild-trivy:
+
+  dockerbuild-trivy-pushimagetoecr:
     needs: snyk
     runs-on: ubuntu-latest
     steps:
@@ -63,3 +66,19 @@ jobs:
         with: 
             name: sbom-trivy
             path: sbom.json 
+
+      - name: AWS (CONFIGURE)
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}     
+
+      - name: AWS (LOGIN)
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: AWS (TAG IMAGE)
+        run:  docker tag proyecto1_grupo9:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest 
+
+      - name: AWS (PUSH IMAGE)
+        run:  docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest 

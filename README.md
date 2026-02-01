@@ -16,3 +16,18 @@ Procesos ejecutados manualmente para probar la app
 4) npm run snyk-test
 5) sudo docker build -t proyecto1_grupo9:latest .
 6) sudo docker run -d -p 3000:3000 --name proyecto1_grupo9 proyecto1_grupo9:latest 
+
+----------------------------------------------------------------------------------
+01/02/26
+
+Hasta ahora tenemos:
+
+- Workflow completo intentando chequeos con supertest, eslint, snyk
+- Buildeo de imagen docker con dockerfile 
+- SBOM con trivy y upload al github actions para descarga del informe
+
+Próximos pasos:
+
+- Push de imagen al registry de AWS
+
+----------------------------------------------------------------------------------
