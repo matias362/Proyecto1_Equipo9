@@ -43,10 +43,17 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: npm run snyk-test
-  dockerbuild:
+  dockerbuild-trivy:
     needs: snyk
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Build (dockerimage)
         run: docker build -t proyecto1_grupo9:latest .
+      - name: Trivy (GENERAR INFORME)
+        run: trivy image --format cyclonedx --output sbom.json proyecto1_grupo9:latest
+      - name: Trivy (SUBIR INFORME)
+        uses: actions/upload-artifact@v4
+        with: 
+            name: sbom-trivy
+            path: sbom.json 
