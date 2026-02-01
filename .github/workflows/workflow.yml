@@ -1,0 +1,50 @@
+name: Proyecto1_Equipo9
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  supertest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+            node-version: '20'
+      - name: Iniciar nodejs
+        run: npm ci
+      - name: Tests (Supertest)
+        run: npm run test
+  eslint:
+    needs: supertest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+            node-version: '20'
+      - name: Iniciar nodejs
+        run: npm ci
+      - name: Tests (Eslint)
+        run: npm run eslint
+  snyk:
+    needs: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+            node-version: '20'
+      - name: Iniciar nodejs
+        run: npm ci
+      - name: Tests (Snyk)
+        run: npm run snyk-test
+  dockerbuild:
+    needs: snyk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (dockerimage)
+        run: docker build -t proyecto1_grupo9:latest .
