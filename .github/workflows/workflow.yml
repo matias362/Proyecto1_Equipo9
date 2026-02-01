@@ -50,8 +50,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build (dockerimage)
         run: docker build -t proyecto1_grupo9:latest .
-      - name: Trivy (GENERAR INFORME)
-        run: trivy image --format cyclonedx --output sbom.json proyecto1_grupo9:latest
+      
+      - name: Trivy - Generar SBOM
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: proyecto1_grupo9:latest
+          format: cyclonedx
+          output: sbom.json
+      
       - name: Trivy (SUBIR INFORME)
         uses: actions/upload-artifact@v4
         with: 
