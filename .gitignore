@@ -19,7 +19,7 @@ yarn-error.log*
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
-.terraform.tfvars
+terraform.tfvars
 
 # Logs y archivos temporales del sistema
 *.log
