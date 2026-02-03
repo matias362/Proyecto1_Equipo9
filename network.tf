@@ -1,6 +1,6 @@
 ##Damos de alta una security grupo que tiene inbound rules y outbound rules##
-resource "aws_security_group" "ec2_sg" {
-  name        = "proyecto1-grupo9-ec2-sg"
+resource "aws_security_group" "app_sg" {
+  name        = "proyecto1-grupo9-app-sg"
   description = "Security group para EC2 con App, Prometheus y Grafana"
   vpc_id      = data.aws_vpc.default.id
 
