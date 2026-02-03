@@ -1,11 +1,11 @@
-##Seguir viendo ésto. Falta definir el data para la ami, agregar las variables que faltan, configurar la key_name y ver el tema del Dockerfile
+##Seguir viendo ésto. Pensar el tema del Dockerfile
 
 resource "aws_instance" "app" {
-  ami                         = data.aws_ami.amazon_linux.id
+  ami                         = var.ami_id
   instance_type               = var.instance_type
-  subnet_id                   = data.aws_subnets.default.ids[0]
-  vpc_security_group_ids      = [aws_security_group.app_sg.id]
-  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
+  subnet_id                   = data.aws_subnets.default.ids[0] ##Esto te da el primer valor del atributo id sacado del segmento data que devuvelve las subnets##
+  vpc_security_group_ids      = [aws_security_group.app_sg.id] 
+  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name ##La instancia ec2 se va a crear con el instance profile que tiene el rol para hacer pull a ECR##
   key_name                    = var.key_name
   associate_public_ip_address = true
 
@@ -15,7 +15,7 @@ resource "aws_instance" "app" {
               yum install -y docker
               systemctl start docker
               systemctl enable docker
-              usermod -aG docker ec2-user
+              sleep 10
 
               aws ecr get-login-password --region ${var.aws_region} \
               | docker login --username AWS \
@@ -25,8 +25,6 @@ resource "aws_instance" "app" {
 
               docker run -d \
                 -p 3000:3000 \
-                -p 9090:9090 \
-                -p 3001:3001 \
                 ${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.ecr_repository}:latest
               EOF
 

@@ -15,7 +15,3 @@ data "aws_subnets" "default" {
     values = [data.aws_vpc.default.id]
   }
 }
-##Se obtienen las AZ cuyo estado sea "available"
-data "aws_availability_zones" "available" {
-  state = "available"
-}
