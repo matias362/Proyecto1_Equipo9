@@ -15,7 +15,7 @@ resource "aws_instance" "app" {
               yum install -y docker
               systemctl start docker
               systemctl enable docker
-              sleep 10
+              sleep 30
 
               aws ecr get-login-password --region ${var.aws_region} \
               | docker login --username AWS \
