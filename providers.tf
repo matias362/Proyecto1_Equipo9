@@ -1,3 +1,4 @@
+##Definimos provider oficial AWS sacado de Hashicorp##
 terraform {
   required_providers {
     aws = {
