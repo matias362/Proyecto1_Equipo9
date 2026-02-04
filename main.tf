@@ -24,8 +24,11 @@ resource "aws_instance" "app" {
 
               docker pull ${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.ecr_repository}:latest
 
+              docker network create monitoring || true
+
               docker run -d \
                 --name app \
+                --network monitoring \
                 -p 3000:3000 \
                 ${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.ecr_repository}:latest
 
@@ -44,11 +47,22 @@ resource "aws_instance" "app" {
                 scrape_interval: 15s
 
               scrape_configs:
-                - job_name: "node-app-health"
-                  metrics_path: /health
+                - job_name: "blackbox-health"
+                  metrics_path: /probe
+                  params:
+                    module: [http_2xx]
+              
                   static_configs:
                     - targets:
-                        - localhost:3000
+                      - http://app:3000/health
+
+                  relabel_configs:
+                    - source_labels: [__address__]
+                      target_label: __param_target
+                    - source_labels: [__param_target]
+                      target_label: instance
+                    - target_label: __address__
+                      replacement: blackbox:9115          
               EOT
 
               cat <<EOT > docker-compose.yml
@@ -61,6 +75,8 @@ resource "aws_instance" "app" {
                     - ./prometheus.yml:/etc/prometheus/prometheus.yml
                   ports:
                     - "9090:9090"
+                  networks:
+                    - monitoring
 
                 grafana:
                   image: grafana/grafana:latest
@@ -69,6 +85,21 @@ resource "aws_instance" "app" {
                     - "3001:3000"
                   depends_on:
                     - prometheus
+                  networks:
+                    - monitoring
+
+                blackbox:
+                  image: prom/blackbox-exporter:latest
+                  container_name: blackbox
+                  ports:
+                    - "9115:9115"
+                  networks:
+                    - monitoring
+
+              networks:
+                monitoring:
+                  external: true                 
+
               EOT
 
               docker compose up -d              
