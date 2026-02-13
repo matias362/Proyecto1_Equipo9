@@ -52,7 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build (dockerimage)
-        run: docker build -t proyecto1_grupo9:latest .
+        run: docker build --provenance false -t proyecto1_grupo9:latest .
       
       - name: Trivy - Generar SBOM
         uses: aquasecurity/trivy-action@0.20.0
