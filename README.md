@@ -30,4 +30,12 @@ Próximos pasos:
 
 - Push de imagen al registry de AWS
 
-----------------------------------------------------------------------------------asdasdasdas
+----------------------------------------------------------------------------------
+15/02/26
+
+Push en la rama main dispara el workflow.yml
+    - El ultimo job pushea una imagen a un repositorio de ECR en la cuenta de AWS
+
+Terraform apply sobre el repositorio levantad toda la infraestructura para levantar los siguientes:
+    - Aplicación corriendo sobre la EC2
+    - Monitoreo corriendo sobre la EC2
