@@ -211,7 +211,7 @@ Grafana se conecta a Prometheus como datasource y permite visualizar métricas b
     -   Integración Prometheus → Grafana
     -   Visualización del dashboard
 
-Enlace: 
+Enlace: https://drive.google.com/drive/folders/19OMNcchCODM2bWUxKQmpktJFQGDrZXbH?usp=drive_link
 
 👨‍💻 Autores
 
