@@ -116,10 +116,10 @@ Esta imagen constituye el artefacto principal de despliegue.
 Se genera un Software Bill of Materials (SBOM) utilizando Trivy en formato CycloneDX.
 
 Esto permite:
-    Inventariar dependencias incluidas en la imagen
-    Facilitar auditorías de seguridad
-    Mejorar trazabilidad del software
-    El SBOM se almacena como artefacto del workflow.
+   - Inventariar dependencias incluidas en la imagen
+   - Facilitar auditorías de seguridad
+   - Mejorar trazabilidad del software
+   - El SBOM se almacena como artefacto del workflow.
 
 6️⃣ Publicación en Amazon ECR
 
@@ -137,7 +137,7 @@ Esta imagen será posteriormente utilizada por Terraform durante el despliegue e
 
 🐳 Artefacto Docker
 
-- Además del push a ECR, la imagen fue exportada mediante:
+Además del push a ECR, la imagen fue exportada mediante:
 
     docker save -o proyecto1_grupo9.tar 076194732070.dkr.ecr.us-east-1.amazonaws.com/mundose/proyecto1_equipo9:latest
 
