@@ -220,5 +220,5 @@ Equipo 9 - PIN Devops 2502
     Ariel Giri (ariel.giri@nemogroup.net)
     Daniel Raya (daniel.raya@nemogroup.net)
     Marco Ollamburo (marco.ollamburo@nemogroup.net)
-    Matías Rocca (matias.rocca@nemogroup.net)
+    Matías Rocca (matias.rocca@nemogroup.net).
     
